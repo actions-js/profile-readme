@@ -1,0 +1,20 @@
+name: 'Profile Readme'
+description: 'Collection of widgets for your profile README'
+author: "actions-js"
+inputs:
+  github_token:
+    description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
+    required: true
+  username:
+    description: 'Github profile username'
+    required: true
+  template:
+    description: 'README template location'
+    required: true
+    default: './TEMPLATE.md'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'star'
+  color: 'yellow'
