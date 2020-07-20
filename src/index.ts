@@ -16,10 +16,11 @@ async function run() {
   const activityWidgets = widgets("GITHUB_ACTIVITY", source);
   if (activityWidgets) {
     for (const widget of activityWidgets) {
-      const events = octokit.activity.listPublicEventsForUser({
+      const events = await octokit.activity.listPublicEventsForUser({
         username,
         per_page: 100
       });
+      console.log(events);
       source.replace(widget.matched, activity(events, widget));
     }
   }
