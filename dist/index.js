@@ -3649,6 +3649,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const token = core.getInput("github_token");
         const template = core.getInput("template");
+        const readme = core.getInput("readme");
         const username = core.getInput("username");
         const octokit = github.getOctokit(token);
         let source = fs.readFileSync(template, "utf-8");
@@ -3661,10 +3662,10 @@ function run() {
             });
             for (const widget of activityWidgets) {
                 core.info(`Generating widget "${widget.matched}"`);
-                source.replace(widget.matched, activity_1.activity(events, widget));
+                source = source.replace(widget.matched, activity_1.activity(events, widget));
             }
         }
-        fs.writeFileSync("README.md", source);
+        fs.writeFileSync(readme, source);
     });
 }
 run().catch(error => {
@@ -4295,7 +4296,6 @@ const serializers = {
 };
 function activity(events, widget) {
     var _a;
-    console.log(events);
     const content = events.data
         // Filter out any boring activity
         .filter(event => serializers.hasOwnProperty(event.type))

@@ -24,7 +24,6 @@ const serializers = {
 };
 
 export function activity(events: any, widget: Widget<ActivityConfig>): string {
-  console.log(events);
   const content = events.data
     // Filter out any boring activity
     .filter(event => serializers.hasOwnProperty(event.type))
