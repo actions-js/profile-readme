@@ -10157,7 +10157,7 @@ const serializers = {
         return `${line} PR #${item.payload.pull_request.number} in ${item.repo.name}`;
     },
     ForkEvent: item => {
-        return `🍴 Forked ${item.forkee.full_name} from ${item.repo.name}`;
+        return `🍴 Forked ${item.payload.forkee.full_name} from ${item.repo.name}`;
     },
     ReleaseEvent: item => {
         return `📦 Released "${item.payload.release.name}" in ${item.repo.name}`;
