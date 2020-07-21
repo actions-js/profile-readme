@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Collection of widgets for your profile README",
   "main": "lib/index.js",
-  "repository": "https://github.com/nestdotland/cinderella.git",
+  "repository": "https://github.com/actions-js/profile-readme.git",
   "author": "Filippo R. (Qu4k)",
   "license": "MIT",
   "private": true,
@@ -12,7 +12,7 @@
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "test": "jest",
-    "pre-checkin": "yarn format && yarn build && yarn test"
+    "export": "yarn format && yarn build"
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
