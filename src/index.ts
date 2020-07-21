@@ -20,7 +20,7 @@ async function run() {
         username,
         per_page: 100
       });
-      console.log(events);
+      core.info(JSON.stringify(events, null, 2))
       source.replace(widget.matched, activity(events, widget));
     }
   }
