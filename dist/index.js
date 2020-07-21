@@ -10880,6 +10880,12 @@ const serializers = {
     },
     ReleaseEvent: item => {
         return `📦 Released "${item.payload.release.name}" in ${item.repo.name}`;
+    },
+    PushEvent: item => {
+        const commits = item.payload.size > 1
+            ? `${item.payload.size} commits`
+            : `${item.payload.size} commit`;
+        return `⬆️ Pushed ${commits} to ${item.repo.name}`;
     }
 };
 function serialize(item, raw) {
@@ -10892,7 +10898,7 @@ function activity(events, widget) {
     var _a;
     const content = events.data
         .filter(event => serializers.hasOwnProperty(event.type))
-        .slice(0, (_a = widget.config.rows) !== null && _a !== void 0 ? _a : 5)
+        .slice(0, (_a = widget.config.rows) !== null && _a !== void 0 ? _a : 10)
         .map(item => serialize(item, widget.config.raw))
         .join("\n");
     return content;

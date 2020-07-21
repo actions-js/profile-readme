@@ -71,12 +71,10 @@ displays as:
 
 ##### Configuration
 
-```jsonc
-{
-  "rows": 12, // default 5
-  "raw": true // Strip markdown formatting. default false.
-}
-```
+| option | value   | default   | description |
+| ------ | ------- | --------- | ----------- |
+| rows   | string  | `10`      | Maximum number of rows to generate. |
+| raw    | boolean | `false`   | Strip markdown formatting. |
 
 #### GitHub Repos
 
@@ -97,13 +95,11 @@ displays as:
 
 ##### Configuration
 
-```jsonc
-{
-  "rows": 12, // default 5
-  "sort": "created", // default "stars"
-  "raw": true // Strip markdown formatting. default false.
-}
-```
+| option | value   | default   | description |
+| ------ | ------- | --------- | ----------- |
+| rows   | string  | `10`      | Maximum number of rows to generate. |
+| sort   | string  | `"stars"` | Sort repositories by "stars", "created", "updated", "pushed", "full_name". |
+| raw    | boolean | `false`   | Strip markdown formatting. |
 
 #### Current Timestamp
 
@@ -121,12 +117,10 @@ Tuesday, July 21st 2020, 8:52:54 am UTC
 
 ##### Configuration
 
-```jsonc
-{
-  "format": "h:mm:ss", // default is ISO 8601,
-  "tz": "America/New_York" // default none (UTC)
-}
-```
+| option | value   | default  | description |
+| ------ | ------- | -------- | ----------- |
+| format | string  | ISO 8601 | moment [format](https://momentjs.com/docs/#/displaying/). |
+| tz     | boolean | UTC      | moment [timezone](https://momentjs.com/timezone/docs/#/using-timezones/). |
 
 ### Inputs
 
