@@ -207,23 +207,37 @@ const comparators = {
     pushed: (a, b) => moment_1.default(a.pushed_at).diff(moment_1.default(b.pushed_at)),
     full_name: (a, b) => a.full_name.localeCompare(b.full_name),
 };
-function serialize(item, raw) {
+function stars(item) {
+    return `${item.stargazers_count}`;
+}
+function description(item) {
+    return `${item.description}`;
+}
+function serialize(item, max, raw) {
     if (raw) {
-        return `📦 ${item.full_name}: ⭐️ ${item.stargazers_count}`;
+        const data = stars(item);
+        const spaces = " ".repeat(max - data.length);
+        return `⭐️ ${data}${spaces} 📦 ${item.full_name}`;
     }
     else {
-        return `* 📦 [${item.full_name}](${item.url}): ⭐️ ${item.stargazers_count}`;
+        return `| 📦 | ${stars(item)} | [${item.full_name}](${item.html_url}) | ${description(item)} |`;
     }
 }
 function repos(repositories, widget) {
     var _a, _b;
-    const content = repositories.data
+    let repos = repositories.data
         // we don't want to reveal secrets
         .filter(item => !item.private)
         .sort(comparators[(_a = widget.config.sort) !== null && _a !== void 0 ? _a : "stars"])
-        .slice(0, (_b = widget.config.rows) !== null && _b !== void 0 ? _b : 5)
-        .map(item => serialize(item, widget.config.raw))
+        .slice(0, (_b = widget.config.rows) !== null && _b !== void 0 ? _b : 5);
+    const max = stars(repos.sort((a, b) => stars(b).length - stars(a).length)[0]).length;
+    let content = repos
+        .map(item => serialize(item, max, widget.config.raw))
         .join("\n");
+    // add table headers
+    if (!widget.config.raw) {
+        content = "|*|Stars|Repo|Description|\n|---|---|---|---|\n" + content;
+    }
     return content;
 }
 exports.repos = repos;
@@ -2001,7 +2015,20 @@ function escapeProperty(s) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.capitalize = void 0;
-exports.capitalize = str => str.slice(0, 1).toUpperCase() + str.slice(1);
+function capitalize(str) {
+    str = str.replace(/_+/g, " ");
+    str = str.replace(/\s+/g, " ");
+    if (str.includes(" ")) {
+        return str
+            .split(" ")
+            .reduce((a, b) => {
+            return a + " " + capitalize(b);
+        }, "")
+            .trim();
+    }
+    return (str.slice(0, 1).toUpperCase() + str.slice(1)).trim();
+}
+exports.capitalize = capitalize;
 //# sourceMappingURL=helpers.js.map
 
 /***/ }),
