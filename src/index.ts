@@ -4,6 +4,7 @@ import * as fs from "fs";
 import { widgets } from "./widget";
 import { activity } from "./widgets/activity";
 import { timestamp } from "./widgets/timestamp";
+import { repos } from "./widgets/repos";
 
 async function run() {
   const token = core.getInput("github_token");
@@ -18,7 +19,7 @@ async function run() {
   const activityWidgets = widgets("GITHUB_ACTIVITY", source);
   if (activityWidgets) {
     core.info(`Found ${activityWidgets.length} activity widget.`);
-    core.info(`Collecting user ${username} activity...`);
+    core.info(`Collecting activity for user ${username}...`);
     const events = await octokit.activity.listPublicEventsForUser({
       username,
       per_page: 100
@@ -29,10 +30,24 @@ async function run() {
     }
   }
 
+  const reposWidgets = widgets("GITHUB_REPOS", source);
+  if (reposWidgets) {
+    core.info(`Found ${reposWidgets.length} timestamp widget.`);
+    core.info(`Collecting repos for user ${username}...`);
+    const repositories = await octokit.repos.listForUser({
+      username,
+      type: "all",
+      per_page: 100
+    });
+    for (const widget of reposWidgets) {
+      core.info(`Generating widget "${widget.matched}"`);
+      source = source.replace(widget.matched, repos(repositories, widget));
+    }
+  }
+
   const timestampWidgets = widgets("TIMESTAMP", source);
   if (timestampWidgets) {
     core.info(`Found ${timestampWidgets.length} timestamp widget.`);
-    core.info(`Collecting user ${username} activity...`);
     for (const widget of timestampWidgets) {
       core.info(`Generating widget "${widget.matched}"`);
       source = source.replace(widget.matched, timestamp(widget));

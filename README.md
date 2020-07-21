@@ -62,18 +62,46 @@ Display your most recent GitHub activity
 displays as:
 
 ```
-💪 Opened PR #43 in <repo>
-❗️ Closed issue #645 in <repo>
-🗣 Commented on #645 in <repo>
-❗️ Closed issue #704 in <repo>
-🗣 Commented on #93 in <repo>
+💪 Opened PR #43 in webview/webview_deno
+❗️ Closed issue #32 in denosaurs/denon
+🗣 Commented on #6 in nestdotland/hatcher
+❗️ Closed issue #22 in nestdotland/eggs
+🗣 Commented on #15 in nestdotland/eggs
 ```
 
 ##### Configuration
 
 ```jsonc
 {
-  "rows": 12 // default 5
+  "rows": 12, // default 5
+  "raw": true // Strip markdown formatting. default false.
+}
+```
+
+#### GitHub Repos
+
+Display your most recent GitHub activity
+
+```markdown
+<!--GITHUB_REPOS:{"rows": 4}-->
+```
+
+displays as:
+
+```
+📦 webview/webview_deno: ⭐️ 439
+📦 denosaurs/denon: ⭐️ 415
+📦 nestdotland/eggs: ⭐️ 8
+📦 nestdotland/hatcher: ⭐️ 2
+```
+
+##### Configuration
+
+```jsonc
+{
+  "rows": 12, // default 5
+  "sort": "created", // default "stars"
+  "raw": true // Strip markdown formatting. default false.
 }
 ```
 

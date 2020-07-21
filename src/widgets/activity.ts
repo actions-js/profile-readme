@@ -2,6 +2,7 @@ import { Widget } from "../widget";
 import { capitalize } from "../helpers";
 
 interface ActivityConfig {
+  raw: boolean;
   rows: number;
 }
 
@@ -29,11 +30,17 @@ const serializers = {
   }
 };
 
+function serialize(item, raw: boolean | undefined): string {
+  const res = serializers[item.type](item);
+  if (raw) return res;
+  return `* ${res}`;
+}
+
 export function activity(events: any, widget: Widget<ActivityConfig>): string {
   const content = events.data
     .filter(event => serializers.hasOwnProperty(event.type))
     .slice(0, widget.config.rows ?? 5)
-    .map(item => serializers[item.type](item))
+    .map(item => serialize(item, widget.config.raw))
     .join("\n");
   return content;
 }

@@ -189,6 +189,48 @@ module.exports = require("os");
 
 /***/ }),
 
+/***/ 104:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.repos = void 0;
+const moment_1 = __importDefault(__webpack_require__(482));
+const comparators = {
+    stars: (a, b) => b.stargazers_count - a.stargazers_count,
+    created: (a, b) => moment_1.default(a.created_at).diff(moment_1.default(b.created_at)),
+    updated: (a, b) => moment_1.default(a.updated_at).diff(moment_1.default(b.updated_at)),
+    pushed: (a, b) => moment_1.default(a.pushed_at).diff(moment_1.default(b.pushed_at)),
+    full_name: (a, b) => a.full_name.localeCompare(b.full_name),
+};
+function serialize(item, raw) {
+    if (raw) {
+        return `📦 ${item.full_name}: ⭐️ ${item.stargazers_count}`;
+    }
+    else {
+        return `* 📦 [${item.full_name}](${item.url}): ⭐️ ${item.stargazers_count}`;
+    }
+}
+function repos(repositories, widget) {
+    var _a, _b;
+    const content = repositories.data
+        // we don't want to reveal secrets
+        .filter(item => !item.private)
+        .sort(comparators[(_a = widget.config.sort) !== null && _a !== void 0 ? _a : "stars"])
+        .slice(0, (_b = widget.config.rows) !== null && _b !== void 0 ? _b : 5)
+        .map(item => serialize(item, widget.config.raw))
+        .join("\n");
+    return content;
+}
+exports.repos = repos;
+//# sourceMappingURL=repos.js.map
+
+/***/ }),
+
 /***/ 127:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
@@ -9323,6 +9365,7 @@ const fs = __importStar(__webpack_require__(747));
 const widget_1 = __webpack_require__(74);
 const activity_1 = __webpack_require__(722);
 const timestamp_1 = __webpack_require__(780);
+const repos_1 = __webpack_require__(104);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const token = core.getInput("github_token");
@@ -9334,7 +9377,7 @@ function run() {
         const activityWidgets = widget_1.widgets("GITHUB_ACTIVITY", source);
         if (activityWidgets) {
             core.info(`Found ${activityWidgets.length} activity widget.`);
-            core.info(`Collecting user ${username} activity...`);
+            core.info(`Collecting activity for user ${username}...`);
             const events = yield octokit.activity.listPublicEventsForUser({
                 username,
                 per_page: 100
@@ -9344,10 +9387,23 @@ function run() {
                 source = source.replace(widget.matched, activity_1.activity(events, widget));
             }
         }
+        const reposWidgets = widget_1.widgets("GITHUB_REPOS", source);
+        if (reposWidgets) {
+            core.info(`Found ${reposWidgets.length} timestamp widget.`);
+            core.info(`Collecting repos for user ${username}...`);
+            const repositories = yield octokit.repos.listForUser({
+                username,
+                type: "all",
+                per_page: 100
+            });
+            for (const widget of reposWidgets) {
+                core.info(`Generating widget "${widget.matched}"`);
+                source = source.replace(widget.matched, repos_1.repos(repositories, widget));
+            }
+        }
         const timestampWidgets = widget_1.widgets("TIMESTAMP", source);
         if (timestampWidgets) {
             core.info(`Found ${timestampWidgets.length} timestamp widget.`);
-            core.info(`Collecting user ${username} activity...`);
             for (const widget of timestampWidgets) {
                 core.info(`Generating widget "${widget.matched}"`);
                 source = source.replace(widget.matched, timestamp_1.timestamp(widget));
@@ -10107,12 +10163,18 @@ const serializers = {
         return `📦 Released "${item.payload.release.name}" in ${item.repo.name}`;
     }
 };
+function serialize(item, raw) {
+    const res = serializers[item.type](item);
+    if (raw)
+        return res;
+    return `* ${res}`;
+}
 function activity(events, widget) {
     var _a;
     const content = events.data
         .filter(event => serializers.hasOwnProperty(event.type))
         .slice(0, (_a = widget.config.rows) !== null && _a !== void 0 ? _a : 5)
-        .map(item => serializers[item.type](item))
+        .map(item => serialize(item, widget.config.raw))
         .join("\n");
     return content;
 }
