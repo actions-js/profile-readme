@@ -7,12 +7,17 @@
   "author": "Filippo R. (Qu4k)",
   "license": "MIT",
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn export"
+    }
+  },
   "scripts": {
     "build": "tsc && ncc build",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "test": "jest",
-    "export": "yarn format && yarn build"
+    "export": "yarn format && yarn build && git add dist/index.js"
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
@@ -23,6 +28,7 @@
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.4",
     "@zeit/ncc": "^0.21.0",
+    "husky": "^4.2.5",
     "jest": "^24.9.0",
     "jest-circus": "^24.7.1",
     "prettier": "^1.19.1",
