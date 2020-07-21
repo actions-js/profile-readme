@@ -1,5 +1,5 @@
-import { Widget } from "./widget";
-import { capitalize } from "./helpers";
+import { Widget } from "../widget";
+import { capitalize } from "../helpers";
 
 interface ActivityConfig {
   rows: number;
@@ -33,6 +33,5 @@ export function activity(events: any, widget: Widget<ActivityConfig>): string {
     .map(item => serializers[item.type](item))
     // Join items to one string
     .join("\n");
-  console.log(content);
   return content;
 }

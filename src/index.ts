@@ -2,7 +2,8 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as fs from "fs";
 import { widgets } from "./widget";
-import { activity } from "./activity";
+import { activity } from "./widgets/activity";
+import { timestamp } from "./widgets/timestamp";
 
 async function run() {
   const token = core.getInput("github_token");
@@ -25,6 +26,16 @@ async function run() {
     for (const widget of activityWidgets) {
       core.info(`Generating widget "${widget.matched}"`);
       source = source.replace(widget.matched, activity(events, widget));
+    }
+  }
+
+  const timestampWidgets = widgets("TIMESTAMP", source);
+  if (timestampWidgets) {
+    core.info(`Found ${timestampWidgets.length} timestamp widget.`);
+    core.info(`Collecting user ${username} activity...`);
+    for (const widget of timestampWidgets) {
+      core.info(`Generating widget "${widget.matched}"`);
+      source = source.replace(widget.matched, timestamp(widget));
     }
   }
 
