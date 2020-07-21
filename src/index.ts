@@ -15,12 +15,15 @@ async function run() {
 
   const activityWidgets = widgets("GITHUB_ACTIVITY", source);
   if (activityWidgets) {
+    core.info(`Found ${activityWidgets.length} activity widget.`)
+    core.info(`Collecting user activity.`)
+    const events = await octokit.activity.listPublicEventsForUser({
+      username,
+      per_page: 100
+    });
+    core.info(`This is events: ${JSON.stringify(events, null, 2)}`)
     for (const widget of activityWidgets) {
-      const events = await octokit.activity.listPublicEventsForUser({
-        username,
-        per_page: 100
-      });
-      core.info(JSON.stringify(events, null, 2))
+      core.info(`Generating widget "${widget.matched}"`);
       source.replace(widget.matched, activity(events, widget));
     }
   }
