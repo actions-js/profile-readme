@@ -19,7 +19,8 @@ async function run() {
     core.info(`Found ${activityWidgets.length} activity widget.`);
     core.info(`Collecting user ${username} activity...`);
     const events = await octokit.activity.listPublicEventsForUser({
-      username
+      username,
+      per_page: 100
     });
     for (const widget of activityWidgets) {
       core.info(`Generating widget "${widget.matched}"`);

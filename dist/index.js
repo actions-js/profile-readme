@@ -3658,7 +3658,8 @@ function run() {
             core.info(`Found ${activityWidgets.length} activity widget.`);
             core.info(`Collecting user ${username} activity...`);
             const events = yield octokit.activity.listPublicEventsForUser({
-                username
+                username,
+                per_page: 100
             });
             for (const widget of activityWidgets) {
                 core.info(`Generating widget "${widget.matched}"`);
@@ -4305,6 +4306,7 @@ function activity(events, widget) {
         .map(item => serializers[item.type](item))
         // Join items to one string
         .join("\n");
+    console.log(content);
     return content;
 }
 exports.activity = activity;
