@@ -12,6 +12,10 @@ inputs:
     description: 'README template location'
     required: true
     default: './TEMPLATE.md'
+  readme:
+    description: 'README output location'
+    required: true
+    default: './README.md'
 runs:
   using: 'node12'
   main: 'dist/index.js'
