@@ -56,7 +56,7 @@ JSON configuration are always optional.
 Display your most recent GitHub activity
 
 ```markdown
-<!--GITHUB_ACTIVITY:{"rows": 5}-->
+<!--GITHUB_ACTIVITY:{"rows": 5, "raw": true}-->
 ```
 
 displays as:
@@ -83,7 +83,7 @@ displays as:
 Display your most recent GitHub activity
 
 ```markdown
-<!--GITHUB_REPOS:{"rows": 4}-->
+<!--GITHUB_REPOS:{"rows": 4, "raw": true}-->
 ```
 
 displays as:
@@ -123,7 +123,8 @@ Tuesday, July 21st 2020, 8:52:54 am UTC
 
 ```jsonc
 {
-  "format": "h:mm:ss" // default is ISO 8601
+  "format": "h:mm:ss", // default is ISO 8601,
+  "tz": "America/New_York" // default none (UTC)
 }
 ```
 

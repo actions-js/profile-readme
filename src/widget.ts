@@ -7,7 +7,7 @@ export function widgets<T>(
   name: string,
   source: string
 ): Widget<T>[] | undefined {
-  const comment = `<!--${name}(?::({.*}))?-->`;
+  const comment = `<!--\s*${name}(?::({.*}))?\s*-->`;
   const regex = new RegExp(comment, "g");
   const widgets: Widget<T>[] = [];
 
