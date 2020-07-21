@@ -9,11 +9,11 @@ inputs:
     description: 'Github profile username'
     required: true
   template:
-    description: 'README template location'
+    description: 'TEMPLATE.md file path'
     required: true
     default: './TEMPLATE.md'
   readme:
-    description: 'README output location'
+    description: 'README.md output file path'
     required: true
     default: './README.md'
 runs:
