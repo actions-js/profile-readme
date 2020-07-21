@@ -3654,18 +3654,23 @@ function run() {
         let source = fs.readFileSync(template, "utf-8");
         const activityWidgets = widget_1.widgets("GITHUB_ACTIVITY", source);
         if (activityWidgets) {
+            core.info(`Found ${activityWidgets.length} activity widget.`);
+            core.info(`Collecting user ${username} activity...`);
+            const events = yield octokit.activity.listPublicEventsForUser({
+                username
+            });
             for (const widget of activityWidgets) {
-                const events = octokit.activity.listPublicEventsForUser({
-                    username,
-                    per_page: 100
-                });
+                core.info(`Generating widget "${widget.matched}"`);
                 source.replace(widget.matched, activity_1.activity(events, widget));
             }
         }
-        fs.writeFileSync(template, source);
+        fs.writeFileSync("README.md", source);
     });
 }
-run();
+run().catch(error => {
+    core.error(error);
+    process.exit(1);
+});
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -4290,6 +4295,7 @@ const serializers = {
 };
 function activity(events, widget) {
     var _a;
+    console.log(events);
     const content = events.data
         // Filter out any boring activity
         .filter(event => serializers.hasOwnProperty(event.type))

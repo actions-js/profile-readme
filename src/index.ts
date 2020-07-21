@@ -7,6 +7,7 @@ import { activity } from "./activity";
 async function run() {
   const token = core.getInput("github_token");
   const template = core.getInput("template");
+  const readme = core.getInput("readme");
   const username = core.getInput("username");
 
   const octokit = github.getOctokit(token);
@@ -15,20 +16,21 @@ async function run() {
 
   const activityWidgets = widgets("GITHUB_ACTIVITY", source);
   if (activityWidgets) {
-    core.info(`Found ${activityWidgets.length} activity widget.`)
-    core.info(`Collecting user activity.`)
+    core.info(`Found ${activityWidgets.length} activity widget.`);
+    core.info(`Collecting user ${username} activity...`);
     const events = await octokit.activity.listPublicEventsForUser({
-      username,
-      per_page: 100
+      username
     });
-    core.info(`This is events: ${JSON.stringify(events, null, 2)}`)
     for (const widget of activityWidgets) {
       core.info(`Generating widget "${widget.matched}"`);
-      source.replace(widget.matched, activity(events, widget));
+      source = source.replace(widget.matched, activity(events, widget));
     }
   }
 
-  fs.writeFileSync(template, source);
+  fs.writeFileSync(readme, source);
 }
 
-run();
+run().catch(error => {
+  core.error(error);
+  process.exit(1);
+});
