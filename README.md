@@ -71,10 +71,23 @@ displays as:
 
 ##### Configuration
 
-| option | value   | default   | description |
-| ------ | ------- | --------- | ----------- |
-| rows   | string  | `10`      | Maximum number of rows to generate. |
-| raw    | boolean | `false`   | Strip markdown formatting. |
+| option  | value    | default   | description |
+| ------- | -------- | --------- | ----------- |
+| rows    | string   | `10`      | Maximum number of rows to generate. |
+| raw     | boolean  | `false`   | Strip markdown formatting. |
+| include | string[] | all       | Select which of the [supported events](#supported-events) you want to **include** in the showcase. |
+| exclude | string[] | `[]`      | Select which of the [supported events](#supported-events) you want to **exclude** in the showcase. |
+
+##### Supported events
+
+```typescript
+"IssueCommentEvent",
+"IssuesEvent",
+"PullRequestEvent",
+"ForkEvent",
+"ReleaseEvent",
+"PushEvent"
+```
 
 #### GitHub Repos
 

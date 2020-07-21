@@ -10895,10 +10895,15 @@ function serialize(item, raw) {
     return `* ${res}`;
 }
 function activity(events, widget) {
-    var _a;
+    var _a, _b, _c;
+    const supportedTypes = Object.keys(serializers);
+    const include = (_a = widget.config.include) !== null && _a !== void 0 ? _a : supportedTypes;
+    const exclude = (_b = widget.config.exclude) !== null && _b !== void 0 ? _b : [];
     const content = events.data
         .filter(event => serializers.hasOwnProperty(event.type))
-        .slice(0, (_a = widget.config.rows) !== null && _a !== void 0 ? _a : 10)
+        .filter(event => include.includes(event.type))
+        .filter(event => !exclude.includes(event.type))
+        .slice(0, (_c = widget.config.rows) !== null && _c !== void 0 ? _c : 10)
         .map(item => serialize(item, widget.config.raw))
         .join("\n");
     return content;

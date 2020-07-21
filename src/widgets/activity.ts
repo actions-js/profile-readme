@@ -4,6 +4,8 @@ import { capitalize } from "../helpers";
 interface ActivityConfig {
   raw: boolean;
   rows: number;
+  exclude: string[];
+  include: string[];
 }
 
 const serializers = {
@@ -43,8 +45,14 @@ function serialize(item, raw: boolean | undefined): string {
 }
 
 export function activity(events: any, widget: Widget<ActivityConfig>): string {
-  const content = events.data
+  const supportedTypes = Object.keys(serializers);
+  const include = widget.config.include ?? supportedTypes;
+  const exclude = widget.config.exclude ?? [];
+
+  const content = (events.data as any[])
     .filter(event => serializers.hasOwnProperty(event.type))
+    .filter(event => include.includes(event.type))
+    .filter(event => !exclude.includes(event.type))
     .slice(0, widget.config.rows ?? 10)
     .map(item => serialize(item, widget.config.raw))
     .join("\n");
