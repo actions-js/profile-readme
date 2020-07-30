@@ -9,9 +9,9 @@ interface ReposConfig {
 
 const comparators = {
   stars: (a, b) => b.stargazers_count - a.stargazers_count,
-  created: (a, b) => moment(a.created_at).diff(moment(b.created_at)),
-  updated: (a, b) => moment(a.updated_at).diff(moment(b.updated_at)),
-  pushed: (a, b) => moment(a.pushed_at).diff(moment(b.pushed_at)),
+  created: (a, b) => moment(b.created_at).diff(moment(a.created_at)),
+  updated: (a, b) => moment(b.updated_at).diff(moment(a.updated_at)),
+  pushed: (a, b) => moment(b.pushed_at).diff(moment(a.pushed_at)),
   full_name: (a, b) => a.full_name.localeCompare(b.full_name),
 }
 
