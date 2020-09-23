@@ -1571,7 +1571,7 @@ function serialize(item, emoji, index, raw) {
         .trim();
     const link = new url_1.URL(item.link || "https://www.youtube.com/watch?v=oHg5SJYRHA0");
     if (raw) {
-        return `${emoji} ${index}. [${title}](${link.href})     ([${link.hostname}](${link.origin}))`;
+        return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) \n`;
     }
     else {
         return `| ${emoji} | ${index} | [${title}](${link.href})  | [${link.hostname}](${link.origin}) |`;

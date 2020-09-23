@@ -34,7 +34,7 @@ function serialize(
   );
 
   if (raw) {
-    return `${emoji} ${index}. [${title}](${link.href})     ([${link.hostname}](${link.origin}))`;
+    return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) \n`;
   } else {
     return `| ${emoji} | ${index} | [${title}](${link.href})  | [${link.hostname}](${link.origin}) |`;
   }
