@@ -140,9 +140,9 @@ Tuesday, July 21st 2020, 8:52:54 am UTC
 Display items from web feeds such as rss or atom.
 
 ```markdown
-<!--FEED:{"rows": 5, "select": "hackernews:show", shuffle: true  }-->
+<!--FEED:{"rows": 5, "select": "hackernews:show", shuffle: true, "title": true  }-->
 
-<!--FEED:{"rows": 5, "select": ["hackernews:ask", "hackernews:show"], "raw": true  }-->
+<!--FEED:{"rows": 5, "select": ["hackernews:ask", "hackernews:show"], "raw": true, "title": true  }-->
 ```
 
 displays as:
@@ -180,6 +180,7 @@ displays as:
 | rows    | number            | `5`      | Number of items to display                                                                                                                                          |
 | raw     | boolean           | `false`  | Strip table markdown                                                                                                                                                |
 | shuffle | boolean           | `false`  | Shuffle the items from the feed                                                                                                                                     |
+| title   | boolean           | `false`  | Controls whether to add a title automatically from the feed.                                                                                                        |
 | select  | string & string[] | `random` | Select specific feeds to display. Flatten the object hierarchy using `:` to select values from a group. Given an array, it will randomly pick one from the options. |
 
 Here's what `FEEDS.json` looks like. You can only have one level of hierarchy like an opml/feed subscription file.

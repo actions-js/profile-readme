@@ -7,6 +7,7 @@ export interface FeedConfig {
   raw: boolean;
   select: string | string[];
   shuffle: boolean;
+  title: boolean;
 }
 
 interface Subscribe {
@@ -97,11 +98,13 @@ export async function feed(subscribe: Subscribe, widget: Widget<FeedConfig>) {
   if (!widget.config.raw) {
     content = "|* |No | Posts | Domain |\n|---|---|---|---|\n" + content;
   }
-  const contentTitle = `${pickRandomItems(["📰", "📋"], 1)[0]} ${capitalize(
-    name
-  )}`;
 
-  content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
+  if (widget.config.title) {
+    const contentTitle = `${pickRandomItems(["📰", "📋"], 1)[0]} ${capitalize(
+      name
+    )}`;
+    content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
+  }
 
   return content;
 }

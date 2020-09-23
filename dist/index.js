@@ -1633,8 +1633,10 @@ function feed(subscribe, widget) {
         if (!widget.config.raw) {
             content = "|* |No | Posts | Domain |\n|---|---|---|---|\n" + content;
         }
-        const contentTitle = `${helpers_1.pickRandomItems(["📰", "📋"], 1)[0]} ${helpers_1.capitalize(name)}`;
-        content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
+        if (widget.config.title) {
+            const contentTitle = `${helpers_1.pickRandomItems(["📰", "📋"], 1)[0]} ${helpers_1.capitalize(name)}`;
+            content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
+        }
         return content;
     });
 }
