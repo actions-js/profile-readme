@@ -1569,10 +1569,6 @@ function serialize(item, emoji, index, raw) {
         .title.split("\n")
         .join("")
         .trim();
-    const description = `${item.contentSnippet.split("\n")[0].trim()} ...` || "-";
-    if (title.length < 50) {
-        title += ": " + description;
-    }
     const link = new url_1.URL(item.link || "https://www.youtube.com/watch?v=oHg5SJYRHA0");
     if (raw) {
         return `${emoji} ${index}. [${title}](${link.href})     ([${link.hostname}](${link.origin}))`;
