@@ -13,19 +13,19 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-      with:
-        persist-credentials: false
-        fetch-depth: 0
-    - name: Create README.md
-      uses: actions-js/profile-readme@master
-      with:
-        username: <your username>
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Commit & Push changes
-      uses: actions-js/push@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@master
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Create README.md
+        uses: actions-js/profile-readme@master
+        with:
+          username: <your username>
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Example TEMPLATE.md file
@@ -37,13 +37,13 @@ jobs:
 
 <!--GITHUB_ACTIVITY:{"rows": 5}-->
 
-------------
+---
+
 <p align="center">
   Last refresh: 
   <b><!--TIMESTAMP--></b>
 </p>
 ```
-
 
 ### Widgets
 
@@ -71,22 +71,22 @@ displays as:
 
 ##### Configuration
 
-| option  | value    | default   | description |
-| ------- | -------- | --------- | ----------- |
-| rows    | string   | `10`      | Maximum number of rows to generate. |
-| raw     | boolean  | `false`   | Strip markdown formatting. |
-| include | string[] | all       | Select which of the [supported events](#supported-events) you want to **include** in the showcase. |
-| exclude | string[] | `[]`      | Select which of the [supported events](#supported-events) you want to **exclude** in the showcase. |
+| option  | value    | default | description                                                                                        |
+| ------- | -------- | ------- | -------------------------------------------------------------------------------------------------- |
+| rows    | string   | `10`    | Maximum number of rows to generate.                                                                |
+| raw     | boolean  | `false` | Strip markdown formatting.                                                                         |
+| include | string[] | all     | Select which of the [supported events](#supported-events) you want to **include** in the showcase. |
+| exclude | string[] | `[]`    | Select which of the [supported events](#supported-events) you want to **exclude** in the showcase. |
 
 ##### Supported events
 
 ```typescript
 "IssueCommentEvent",
-"IssuesEvent",
-"PullRequestEvent",
-"ForkEvent",
-"ReleaseEvent",
-"PushEvent"
+  "IssuesEvent",
+  "PullRequestEvent",
+  "ForkEvent",
+  "ReleaseEvent",
+  "PushEvent";
 ```
 
 #### GitHub Repos
@@ -108,11 +108,11 @@ displays as:
 
 ##### Configuration
 
-| option | value   | default   | description |
-| ------ | ------- | --------- | ----------- |
-| rows   | string  | `10`      | Maximum number of rows to generate. |
+| option | value   | default   | description                                                                |
+| ------ | ------- | --------- | -------------------------------------------------------------------------- |
+| rows   | string  | `10`      | Maximum number of rows to generate.                                        |
 | sort   | string  | `"stars"` | Sort repositories by "stars", "created", "updated", "pushed", "full_name". |
-| raw    | boolean | `false`   | Strip markdown formatting. |
+| raw    | boolean | `false`   | Strip markdown formatting.                                                 |
 
 #### Current Timestamp
 
@@ -130,19 +130,42 @@ Tuesday, July 21st 2020, 8:52:54 am UTC
 
 ##### Configuration
 
-| option | value   | default  | description |
-| ------ | ------- | -------- | ----------- |
-| format | string  | ISO 8601 | moment [format](https://momentjs.com/docs/#/displaying/). |
+| option | value   | default  | description                                                               |
+| ------ | ------- | -------- | ------------------------------------------------------------------------- |
+| format | string  | ISO 8601 | moment [format](https://momentjs.com/docs/#/displaying/).                 |
 | tz     | boolean | UTC      | moment [timezone](https://momentjs.com/timezone/docs/#/using-timezones/). |
+
+#### Feed
+
+Display items from web feeds such as rss or atom.
+
+```markdown
+<!--FEED:{"rows": 5, "select": "hackernews:top", shuffle: true  }-->
+
+<!--FEED:{"rows": 10, "select": ["hackernews:ask", "hackernews:show"]  }-->
+
+<!--FEED:{"rows": 5, "raw": true  }-->
+```
+
+##### Configuration
+
+| option  | value             | default  | description                                                                                                                                                   |
+| ------- | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| rows    | number            | `5`      | Number of items to display                                                                                                                                    |
+| raw     | boolean           | `false`  | Strip table markdown                                                                                                                                          |
+| shuffle | boolean           | `false`  | Shuffle the items from the feed                                                                                                                               |
+| select  | string & string[] | `random` | Select specific feeds to display. Flatten the object hiearchy using `:` to select values from a group. Given a list, it will randomly pick one from the list. |
 
 ### Inputs
 
-| name         | value   | default         | description |
-| ------------ | ------  | --------------- | ----------- |
-| github_token | string  |                 | Token for the repo. Can be passed in using `${{ secrets.GITHUB_TOKEN }}`. |
-| username     | string  |                 | Github profile username. |
-| template     | string  | './TEMPLATE.md' | TEMPLATE.md file path.   |
-| readme       | string  | './README.md'   | README.md output file path.   |
+| name         | value  | default         | description                                                               |
+| ------------ | ------ | --------------- | ------------------------------------------------------------------------- |
+| github_token | string |                 | Token for the repo. Can be passed in using `${{ secrets.GITHUB_TOKEN }}`. |
+| username     | string |                 | Github profile username.                                                  |
+| feed         | string | "FEEDS.json"    | FEEDS.json file                                                           |
+| template     | string | './TEMPLATE.md' | TEMPLATE.md file path.                                                    |
+| readme       | string | './README.md'   | README.md output file path.                                               |
+|              |
 
 ## License
 
