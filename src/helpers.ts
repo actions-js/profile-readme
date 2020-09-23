@@ -24,5 +24,5 @@ export function pickRandomItems<T>(items: T[], limit = 2): T[] {
     if (indices.indexOf(index) !== -1) continue;
     indices.push(index);
   }
-  return indices.map((idx) => items[idx]);
+  return indices.map(idx => items[idx]);
 }

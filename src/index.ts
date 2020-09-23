@@ -24,7 +24,7 @@ async function run() {
     core.info(`Collecting activity for user ${username}...`);
     const events = await octokit.activity.listPublicEventsForUser({
       username,
-      per_page: 100,
+      per_page: 100
     });
     for (const widget of activityWidgets) {
       core.info(`Generating widget "${widget.matched}"`);
@@ -39,7 +39,7 @@ async function run() {
     const repositories = await octokit.repos.listForUser({
       username,
       type: "all",
-      per_page: 100,
+      per_page: 100
     });
     for (const widget of reposWidgets) {
       core.info(`Generating widget "${widget.matched}"`);
@@ -66,7 +66,7 @@ async function run() {
   fs.writeFileSync(readme, source);
 }
 
-run().catch((error) => {
+run().catch(error => {
   core.error(error);
   process.exit(1);
 });

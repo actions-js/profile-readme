@@ -1565,7 +1565,6 @@ const helpers_1 = __webpack_require__(441);
 const rss_parser_1 = __importDefault(__webpack_require__(305));
 const url_1 = __webpack_require__(835);
 function serialize(item, emoji, index, raw) {
-    const author = item.creator || item.author || "-";
     let title = item
         .title.split("\n")
         .join("")
@@ -1629,7 +1628,7 @@ function feed(subscribe, widget) {
                 .sort((a, b) => a.sort - b.sort)
                 .map((a) => a.value);
         }
-        result.items = result.items.slice(0, (_a = widget.config.row) !== null && _a !== void 0 ? _a : 5);
+        result.items = result.items.slice(0, (_a = widget.config.rows) !== null && _a !== void 0 ? _a : 5);
         const emojis = ["📭", "📌", "🔖"];
         const [emoji] = helpers_1.pickRandomItems(emojis, 1);
         let content = result.items
@@ -1639,12 +1638,11 @@ function feed(subscribe, widget) {
             content = "|* |No | Posts | Domain |\n|---|---|---|---|\n" + content;
         }
         const contentTitle = `${helpers_1.pickRandomItems(["📰", "📋"], 1)[0]} ${helpers_1.capitalize(name)}`;
-        content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n ${content}`;
+        content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
         return content;
     });
 }
 exports.feed = feed;
-"";
 //# sourceMappingURL=feed.js.map
 
 /***/ }),
