@@ -5,17 +5,9 @@ import { URL } from "url";
 export interface FeedConfig {
   rows: number;
   raw: boolean;
-  select: string | string[];
+  select: string[];
   shuffle: boolean;
   title: boolean;
-}
-
-interface Subscribe {
-  [key: string]:
-    | string
-    | {
-        [key: string]: string;
-      };
 }
 
 function serialize(
@@ -34,45 +26,20 @@ function serialize(
   );
 
   if (raw) {
-    return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) \n`;
+    return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) <br/>`;
   } else {
     return `| ${emoji} | ${index} | [${title}](${link.href})  | [${link.hostname}](${link.origin}) |`;
   }
 }
 
-const selectFeed = (select: string, subscribe: Subscribe): [string, string] => {
-  const keys = select.split(":");
-  const [first, second] = keys;
-  if (!subscribe[first]) {
-    throw new TypeError(`${first} isn't a valid key in the subscription file.`);
-  }
-  if (typeof subscribe[first] === "object") {
-    return [[first, second].join(" "), subscribe[first][second]];
-  }
-  return [first, subscribe[first] as string];
-};
+export async function feed(
+  subscribe: { [key: string]: string },
+  widget: Widget<FeedConfig>
+) {
+  let feeds = Object.entries(subscribe);
 
-export async function feed(subscribe: Subscribe, widget: Widget<FeedConfig>) {
-  const feeds: [string, string][] = [];
-  const select = widget.config.select;
-  if (select) {
-    if (select instanceof Array) {
-      for (const item of select) {
-        feeds.push(selectFeed(item, subscribe));
-      }
-    } else {
-      feeds.push(selectFeed(select, subscribe));
-    }
-  } else {
-    for (const [key, value] of Object.entries(subscribe)) {
-      if (typeof value === "object") {
-        for (const [skey, svalue] of Object.entries(value)) {
-          feeds.push([[key, skey].join(" "), svalue]);
-        }
-      } else {
-        feeds.push([key, value]);
-      }
-    }
+  if (widget.config.select) {
+    feeds = feeds.filter(([name]) => widget.config.select!.includes(name));
   }
 
   const [name, url] = pickRandomItems(feeds, 1)[0];

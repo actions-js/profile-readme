@@ -1571,49 +1571,18 @@ function serialize(item, emoji, index, raw) {
         .trim();
     const link = new url_1.URL(item.link || "https://www.youtube.com/watch?v=oHg5SJYRHA0");
     if (raw) {
-        return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) \n`;
+        return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) <br/>`;
     }
     else {
         return `| ${emoji} | ${index} | [${title}](${link.href})  | [${link.hostname}](${link.origin}) |`;
     }
 }
-const selectFeed = (select, subscribe) => {
-    const keys = select.split(":");
-    const [first, second] = keys;
-    if (!subscribe[first]) {
-        throw new TypeError(`${first} isn't a valid key in the subscription file.`);
-    }
-    if (typeof subscribe[first] === "object") {
-        return [[first, second].join(" "), subscribe[first][second]];
-    }
-    return [first, subscribe[first]];
-};
 function feed(subscribe, widget) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const feeds = [];
-        const select = widget.config.select;
-        if (select) {
-            if (select instanceof Array) {
-                for (const item of select) {
-                    feeds.push(selectFeed(item, subscribe));
-                }
-            }
-            else {
-                feeds.push(selectFeed(select, subscribe));
-            }
-        }
-        else {
-            for (const [key, value] of Object.entries(subscribe)) {
-                if (typeof value === "object") {
-                    for (const [skey, svalue] of Object.entries(value)) {
-                        feeds.push([[key, skey].join(" "), svalue]);
-                    }
-                }
-                else {
-                    feeds.push([key, value]);
-                }
-            }
+        let feeds = Object.entries(subscribe);
+        if (widget.config.select) {
+            feeds = feeds.filter(([name]) => widget.config.select.includes(name));
         }
         const [name, url] = helpers_1.pickRandomItems(feeds, 1)[0];
         const feed = new rss_parser_1.default();

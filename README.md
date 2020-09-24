@@ -140,9 +140,9 @@ Tuesday, July 21st 2020, 8:52:54 am UTC
 Display items from web feeds such as rss or atom.
 
 ```markdown
-<!--FEED:{"rows": 5, "select": "hackernews:show", shuffle: true, "title": true  }-->
+<!--FEED:{"rows": 5, "select": "hackernews show", shuffle: true, "title": true  }-->
 
-<!--FEED:{"rows": 5, "select": ["hackernews:ask", "hackernews:show"], "raw": true, "title": true  }-->
+<!--FEED:{"rows": 5, "select": ["hackernews ask", "hackernews show"], "raw": true, "title": true }-->
 ```
 
 displays as:
@@ -167,31 +167,33 @@ displays as:
 > This is generated from feed provided [here](https://hnrss.org/show). Add it to your rss reader!
 
 🔖 1. [Show HN: Johariapp – For individuals to track their performance on Johari Window](https://johariapp.com/) ([johariapp.com](https://johariapp.com))
+
 🔖 2. [Show HN: Create and Monetize your Zoom Events in under 2 Minutes](http://ditto.video/) ([ditto.video](http://ditto.video))
+
 🔖 3. [Show HN: Compare various PDF-to-text libraries in a few clicks](https://www.apibatchtest.com/) ([www.apibatchtest.com](https://www.apibatchtest.com))
+
 🔖 4. [Show HN: UDT Courseware – Train people how to label a dataset](https://universaldatatool.com/courses) ([universaldatatool.com](https://universaldatatool.com))
+
 🔖 5. [Show HN: An OpenStreetMap Gutenberg Block for WordPress](https://wordpress.org/plugins/ootb-openstreetmap/) ([wordpress.org](https://wordpress.org))
 ```
 
 ##### Configuration
 
-| option  | value             | default  | description                                                                                                                                                         |
-| ------- | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| rows    | number            | `5`      | Number of items to display                                                                                                                                          |
-| raw     | boolean           | `false`  | Strip table markdown                                                                                                                                                |
-| shuffle | boolean           | `false`  | Shuffle the items from the feed                                                                                                                                     |
-| title   | boolean           | `false`  | Controls whether to add a title automatically from the feed.                                                                                                        |
-| select  | string & string[] | `random` | Select specific feeds to display. Flatten the object hierarchy using `:` to select values from a group. Given an array, it will randomly pick one from the options. |
+| option  | value    | default | description                                                  |
+| ------- | -------- | ------- | ------------------------------------------------------------ |
+| rows    | number   | `5`     | Number of items to display                                   |
+| raw     | boolean  | `false` | Strip table markdown                                         |
+| shuffle | boolean  | `false` | Shuffle the items from the feed                              |
+| title   | boolean  | `false` | Controls whether to add a title automatically from the feed. |
+| select  | string[] | `all[]` | Select specific feeds to display.                            |
 
-Here's what `FEEDS.json` looks like. You can only have one level of hierarchy like an opml/feed subscription file.
+Here's what `FEEDS.json` looks like.
 
 ```json
 {
-  "hackernews": {
-    "top": "https://hnrss.org/frontpage",
-    "show": "https://hnrss.org/show",
-    "ask": "https://hnrss.org/show"
-  }
+  "hackernews top": "https://hnrss.org/frontpage",
+  "hackernews show": "https://hnrss.org/show",
+  "hackernews ask": "https://hnrss.org/show"
 }
 ```
 
