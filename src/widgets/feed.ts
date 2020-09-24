@@ -67,9 +67,7 @@ export async function feed(
   }
 
   if (widget.config.title) {
-    const contentTitle = `${pickRandomItems(["📰", "📋"], 1)[0]} ${capitalize(
-      name
-    )}`;
+    const contentTitle = `${pickRandomItems(["📰", "📋"], 1)[0]} ${name}`;
     content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
   }
 

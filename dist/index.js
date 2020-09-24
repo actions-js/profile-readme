@@ -1603,7 +1603,7 @@ function feed(subscribe, widget) {
             content = "|* |No | Posts | Domain |\n|---|---|---|---|\n" + content;
         }
         if (widget.config.title) {
-            const contentTitle = `${helpers_1.pickRandomItems(["📰", "📋"], 1)[0]} ${helpers_1.capitalize(name)}`;
+            const contentTitle = `${helpers_1.pickRandomItems(["📰", "📋"], 1)[0]} ${name}`;
             content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
         }
         return content;
