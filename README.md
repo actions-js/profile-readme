@@ -147,35 +147,34 @@ Display items from web feeds such as rss or atom.
 
 displays as:
 
-```markdown
 ### 📰 Hackernews Show
 
 > This is generated from feed provided [here](https://hnrss.org/show). Add it to your rss reader!
 
-| \*  | No  | Posts                                                                                                        | Domain                                                 |
-| --- | --- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
-| 🔖  | 1   | [Show HN: Johariapp – For individuals to track their performance on Johari Window](https://johariapp.com/)   | [johariapp.com](https://johariapp.com)                 |
-| 🔖  | 2   | [Show HN: Create and Monetize your Zoom Events in under 2 Minutes](http://ditto.video/)                      | [ditto.video](http://ditto.video)                      |
-| 🔖  | 3   | [Show HN: Compare various PDF-to-text libraries in a few clicks](https://www.apibatchtest.com/)              | [www.apibatchtest.com](https://www.apibatchtest.com)   |
-| 🔖  | 4   | [Show HN: UDT Courseware – Train people how to label a dataset](https://universaldatatool.com/courses)       | [universaldatatool.com](https://universaldatatool.com) |
-| 🔖  | 5   | [Show HN: An OpenStreetMap Gutenberg Block for WordPress](https://wordpress.org/plugins/ootb-openstreetmap/) | [wordpress.org](https://wordpress.org)                 |
-```
+---
 
-```markdown
+| Index | Posts                                                                                                        | Domain                                                 |
+| ----- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| 1     | [Show HN: Johariapp – For individuals to track their performance on Johari Window](https://johariapp.com/)   | [johariapp.com](https://johariapp.com)                 |
+| 2     | [Show HN: Create and Monetize your Zoom Events in under 2 Minutes](http://ditto.video/)                      | [ditto.video](http://ditto.video)                      |
+| 3     | [Show HN: Compare various PDF-to-text libraries in a few clicks](https://www.apibatchtest.com/)              | [www.apibatchtest.com](https://www.apibatchtest.com)   |
+| 4     | [Show HN: UDT Courseware – Train people how to label a dataset](https://universaldatatool.com/courses)       | [universaldatatool.com](https://universaldatatool.com) |
+| 5     | [Show HN: An OpenStreetMap Gutenberg Block for WordPress](https://wordpress.org/plugins/ootb-openstreetmap/) | [wordpress.org](https://wordpress.org)                 |
+
 ### 📋 Hackernews Ask
 
 > This is generated from feed provided [here](https://hnrss.org/show). Add it to your rss reader!
 
-🔖 1. [Show HN: Johariapp – For individuals to track their performance on Johari Window](https://johariapp.com/) ([johariapp.com](https://johariapp.com))
+---
 
-🔖 2. [Show HN: Create and Monetize your Zoom Events in under 2 Minutes](http://ditto.video/) ([ditto.video](http://ditto.video))
+1.  [Show HN: Johariapp – For individuals to track their performance on Johari Window](https://johariapp.com/) ([johariapp.com](https://johariapp.com))
 
-🔖 3. [Show HN: Compare various PDF-to-text libraries in a few clicks](https://www.apibatchtest.com/) ([www.apibatchtest.com](https://www.apibatchtest.com))
+2.  [Show HN: Create and Monetize your Zoom Events in under 2 Minutes](http://ditto.video/) ([ditto.video](http://ditto.video))
 
-🔖 4. [Show HN: UDT Courseware – Train people how to label a dataset](https://universaldatatool.com/courses) ([universaldatatool.com](https://universaldatatool.com))
+3.  [Show HN: Compare various PDF-to-text libraries in a few clicks](https://www.apibatchtest.com/) ([www.apibatchtest.com](https://www.apibatchtest.com))
+4.  [Show HN: UDT Courseware – Train people how to label a dataset](https://universaldatatool.com/courses) ([universaldatatool.com](https://universaldatatool.com))
 
-🔖 5. [Show HN: An OpenStreetMap Gutenberg Block for WordPress](https://wordpress.org/plugins/ootb-openstreetmap/) ([wordpress.org](https://wordpress.org))
-```
+5.  [Show HN: An OpenStreetMap Gutenberg Block for WordPress](https://wordpress.org/plugins/ootb-openstreetmap/) ([wordpress.org](https://wordpress.org))
 
 ##### Configuration
 

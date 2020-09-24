@@ -10,12 +10,7 @@ export interface FeedConfig {
   title: boolean;
 }
 
-function serialize(
-  item: Item,
-  emoji: string,
-  index: number,
-  raw: boolean | undefined
-) {
+function serialize(item: Item, index: number, raw: boolean | undefined) {
   let title = item
     .title!.split("\n")
     .join("")
@@ -26,9 +21,9 @@ function serialize(
   );
 
   if (raw) {
-    return `${emoji} ${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin})) <br/>`;
+    return `${index}. [${title}](${link.href}) ([${link.hostname}](${link.origin}))`;
   } else {
-    return `| ${emoji} | ${index} | [${title}](${link.href})  | [${link.hostname}](${link.origin}) |`;
+    return `| ${index} | [${title}](${link.href})  | [${link.hostname}](${link.origin}) |`;
   }
 }
 
@@ -56,19 +51,19 @@ export async function feed(
 
   result.items = result.items!.slice(0, widget.config.rows ?? 5);
 
-  const emojis = ["📭", "📌", "🔖"];
-  const [emoji] = pickRandomItems(emojis, 1);
   let content = result.items
-    .map((item, index) => serialize(item, emoji, index + 1, widget.config.raw))
+    .map((item, index) => serialize(item, index + 1, widget.config.raw))
     .join("\n");
 
   if (!widget.config.raw) {
-    content = "|* |No | Posts | Domain |\n|---|---|---|---|\n" + content;
+    content = "|Index|Posts|Domain|\n|---|---|---|---|\n" + content;
   }
 
   if (widget.config.title) {
-    const contentTitle = `${pickRandomItems(["📰", "📋"], 1)[0]} ${name}`;
-    content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n ${content}`;
+    const contentTitle = `${
+      pickRandomItems(["📰", "📋", "📑", "📖", "🔖"], 1)[0]
+    } ${name}`;
+    content = `### ${contentTitle}\n > This is generated from feed provided [here](${url}). Add it to your rss reader! \n\n --- \n ${content}`;
   }
 
   return content;
