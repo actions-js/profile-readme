@@ -16,7 +16,6 @@ async function run() {
   const octokit = github.getOctokit(token);
 
   let source = fs.readFileSync(template, "utf-8");
-  const subscribe = JSON.parse(fs.readFileSync(subscriptions, "utf-8"));
 
   const activityWidgets = widgets("GITHUB_ACTIVITY", source);
   if (activityWidgets) {
@@ -56,13 +55,17 @@ async function run() {
     }
   }
 
-  const feedWidgets = widgets("FEED", source);
-  if (feedWidgets) {
-    core.info(`Found ${feedWidgets.length} feed widget.`);
-    for (const widget of feedWidgets) {
-      source = source.replace(widget.matched, await feed(subscribe, widget));
+  if (fs.existsSync(subscriptions)) {
+    const subscribe = JSON.parse(fs.readFileSync(subscriptions, "utf-8"));
+    const feedWidgets = widgets("FEED", source);
+    if (feedWidgets) {
+      core.info(`Found ${feedWidgets.length} feed widget.`);
+      for (const widget of feedWidgets) {
+        source = source.replace(widget.matched, await feed(subscribe, widget));
+      }
     }
   }
+
   fs.writeFileSync(readme, source);
 }
 

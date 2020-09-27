@@ -11994,7 +11994,6 @@ function run() {
         const subscriptions = core.getInput("feed");
         const octokit = github.getOctokit(token);
         let source = fs.readFileSync(template, "utf-8");
-        const subscribe = JSON.parse(fs.readFileSync(subscriptions, "utf-8"));
         const activityWidgets = widget_1.widgets("GITHUB_ACTIVITY", source);
         if (activityWidgets) {
             core.info(`Found ${activityWidgets.length} activity widget.`);
@@ -12030,11 +12029,14 @@ function run() {
                 source = source.replace(widget.matched, timestamp_1.timestamp(widget));
             }
         }
-        const feedWidgets = widget_1.widgets("FEED", source);
-        if (feedWidgets) {
-            core.info(`Found ${feedWidgets.length} feed widget.`);
-            for (const widget of feedWidgets) {
-                source = source.replace(widget.matched, yield feed_1.feed(subscribe, widget));
+        if (fs.existsSync(subscriptions)) {
+            const subscribe = JSON.parse(fs.readFileSync(subscriptions, "utf-8"));
+            const feedWidgets = widget_1.widgets("FEED", source);
+            if (feedWidgets) {
+                core.info(`Found ${feedWidgets.length} feed widget.`);
+                for (const widget of feedWidgets) {
+                    source = source.replace(widget.matched, yield feed_1.feed(subscribe, widget));
+                }
             }
         }
         fs.writeFileSync(readme, source);
