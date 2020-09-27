@@ -23,7 +23,8 @@
     "@actions/core": "^1.2.4",
     "@actions/github": "^4.0.0",
     "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31"
+    "moment-timezone": "^0.5.31",
+    "rss-parser": "^3.9.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",

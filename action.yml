@@ -1,24 +1,27 @@
-name: 'Profile Readme'
-description: 'Collection of widgets for your profile README'
+name: "Profile Readme"
+description: "Collection of widgets for your profile README"
 author: "actions-js"
 inputs:
   github_token:
     description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
     required: true
   username:
-    description: 'Github profile username'
+    description: "Github profile username"
     required: true
+  feed:
+    required: false
+    description: "FEED.json file path"
   template:
-    description: 'TEMPLATE.md file path'
+    description: "TEMPLATE.md file path"
     required: true
-    default: './TEMPLATE.md'
+    default: "./TEMPLATE.md"
   readme:
-    description: 'README.md output file path'
+    description: "README.md output file path"
     required: true
-    default: './README.md'
+    default: "./README.md"
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"
 branding:
-  icon: 'star'
-  color: 'yellow'
+  icon: "star"
+  color: "yellow"

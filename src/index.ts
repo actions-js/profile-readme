@@ -5,16 +5,18 @@ import { widgets } from "./widget";
 import { activity } from "./widgets/activity";
 import { timestamp } from "./widgets/timestamp";
 import { repos } from "./widgets/repos";
+import { feed } from "./widgets/feed";
 
 async function run() {
   const token = core.getInput("github_token");
   const template = core.getInput("template");
   const readme = core.getInput("readme");
   const username = core.getInput("username");
-
+  const subscriptions = core.getInput("feed");
   const octokit = github.getOctokit(token);
 
   let source = fs.readFileSync(template, "utf-8");
+  const subscribe = JSON.parse(fs.readFileSync(subscriptions, "utf-8"));
 
   const activityWidgets = widgets("GITHUB_ACTIVITY", source);
   if (activityWidgets) {
@@ -32,7 +34,7 @@ async function run() {
 
   const reposWidgets = widgets("GITHUB_REPOS", source);
   if (reposWidgets) {
-    core.info(`Found ${reposWidgets.length} timestamp widget.`);
+    core.info(`Found ${reposWidgets.length} repos widget.`);
     core.info(`Collecting repos for user ${username}...`);
     const repositories = await octokit.repos.listForUser({
       username,
@@ -54,6 +56,13 @@ async function run() {
     }
   }
 
+  const feedWidgets = widgets("FEED", source);
+  if (feedWidgets) {
+    core.info(`Found ${feedWidgets.length} feed widget.`);
+    for (const widget of feedWidgets) {
+      source = source.replace(widget.matched, await feed(subscribe, widget));
+    }
+  }
   fs.writeFileSync(readme, source);
 }
 
